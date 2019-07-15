@@ -1,0 +1,22 @@
+[
+	{
+		"modid"        : "xpdiary",
+		"name"         : "XP Diary",
+		"description"  : "Store your experience!",
+		"version"      : "U.0.0_0",
+		"mcversion"    : "1.12.2",
+		"updateUrl"    : "",
+		"authorList"   : [
+			"dyeogame"
+		],
+		"credits"      : "Forgelin",
+		"logoFile"     : "",
+		"screenshots"  : [ ],
+		"requiredMods" : [
+			"forgelin"
+		],
+		"dependencies" : [
+			"forgelin"
+		]
+	}
+]
