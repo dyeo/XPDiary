@@ -92,7 +92,15 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
         return player.getDistanceSq(pos.x + CENTRE_OFFSET, pos.y + CENTRE_OFFSET, pos.z + CENTRE_OFFSET) < MAXIMUM_DISTANCE_SQ
     }
 
-    override fun openInventory(player: EntityPlayer) {}
+    override fun openInventory(player: EntityPlayer)
+    {
+        if(balance > storageCap)
+        {
+            balance = storageCap.toFloat()
+            markDirty()
+            updateBalance()
+        }
+    }
 
     override fun setField(id: Int, value: Int) {}
 
