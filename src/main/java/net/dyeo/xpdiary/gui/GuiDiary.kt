@@ -26,15 +26,15 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
     private val texture = ResourceLocation(modid, "textures/gui/${BlockDiary.name}.png")
     private val container: ContainerDiary = this.inventorySlots as ContainerDiary
 
-    private val plus1 = GuiButton(0, 220, 60, 60, 20, "+1")
-    private val plus10 = GuiButton(1, 220, 80, 60, 20, "+10")
-    private val plus100 = GuiButton(2, 220, 100, 60, 20, "+100")
-    private val plus1000 = GuiButton(3, 220, 120, 60, 20, "+1000")
+    private val plus1 = GuiButton(0, 4, 138, 40, 20, "▲1")
+    private val plus10 = GuiButton(1, 48, 138, 40, 20, "▲10")
+    private val plus100 = GuiButton(2, 92, 138, 40, 20, "▲100")
+    private val plus1000 = GuiButton(3, 136, 138, 40, 20, "▲1000")
 
-    private val minus1 = GuiButton(4, 160, 60, 60, 20, "-1")
-    private val minus10 = GuiButton(5, 160, 80, 60, 20, "-10")
-    private val minus100 = GuiButton(6, 160, 100, 60, 20, "-100")
-    private val minus1000 = GuiButton(7, 160, 120, 60, 20, "-1000")
+    private val minus1 = GuiButton(4, 4, 160, 40, 20, "▼1")
+    private val minus10 = GuiButton(5, 48, 160, 40, 20, "▼10")
+    private val minus100 = GuiButton(6, 92, 160, 40, 20, "▼100")
+    private val minus1000 = GuiButton(7, 136, 160, 40, 20, "▼1000")
 
     init
     {
@@ -71,11 +71,21 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
         updateUi()
         super.drawGuiContainerForegroundLayer(mouseX, mouseY)
 
-        val LABEL_XPOS = 5
-        val LABEL_YPOS = 5
-        fontRenderer.drawString(tileEntityDiary.displayName!!.unformattedText, LABEL_XPOS, LABEL_YPOS, Color.darkGray.rgb)
-        fontRenderer.drawString("${tileEntityDiary.balance}XP", LABEL_XPOS, LABEL_YPOS + 10, Color.darkGray.rgb)
-        fontRenderer.drawString("-${tileEntityDiary.storageTax*100}%", LABEL_XPOS, LABEL_YPOS + 20, Color.darkGray.rgb)
+        fontRenderer.drawString(tileEntityDiary.displayName!!.unformattedText, 5, 5, Color.darkGray.rgb)
+
+        val xp = "%.2f".format(tileEntityDiary.balance) + "XP"
+        val tax = "-" + "%.2f".format(tileEntityDiary.storageTax*100.0f) + "%"
+        val px = player.experienceTotal.toString() + "XP"
+
+        val xpw = fontRenderer.getStringWidth(xp)
+        val taxw = fontRenderer.getStringWidth(tax)
+        val pxw = fontRenderer.getStringWidth(px)
+
+        fontRenderer.drawString(xp, xSize/2 - xpw/2, 32 + fontRenderer.FONT_HEIGHT/2, Color.darkGray.rgb)
+        fontRenderer.drawString(tax, xSize/2 - taxw/2, ySize/2 - 10 - fontRenderer.FONT_HEIGHT/2, Color.darkGray.rgb)
+        fontRenderer.drawString(px, xSize/2 - pxw/2, ySize - 7 - fontRenderer.FONT_HEIGHT, Color.darkGray.rgb)
+
+        updateUi()
     }
 
     override fun actionPerformed(button: GuiButton)
@@ -95,6 +105,29 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
         minus10.enabled = tileEntityDiary.balance >= 10
         minus100.enabled = tileEntityDiary.balance >= 100
         minus1000.enabled = tileEntityDiary.balance >= 1000
+
+        updateButtonPositions()
     }
 
+    private fun updateButtonPositions()
+    {
+        val ofs = 2
+        var xpos = guiLeft + (ofs * 2) + 1
+
+        for (button in buttonList.take(4))
+        {
+            button.x = xpos
+            button.y = (guiTop + ySize) - 60 - (ofs * 3)
+            xpos += ofs + button.width
+        }
+
+        xpos = guiLeft + (ofs * 2) + 1
+
+        for (button in buttonList.drop(4))
+        {
+            button.x = xpos
+            button.y = (guiTop + ySize) - 40 - (ofs * 2)
+            xpos += ofs + button.width
+        }
+    }
 }

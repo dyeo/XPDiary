@@ -217,9 +217,9 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
                 }
             }
         }
-        return kotlin.math.min(15.0f, power)
+        return kotlin.math.min(15.0f, power) / 15.0f
     }
 
     val storageTax: Float
-    get() = (1.0f - (storagePower / 15.0f)) * 0.3f
+    get() = (1.0f - storagePower) * 0.3f
 }

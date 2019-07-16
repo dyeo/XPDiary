@@ -56,6 +56,4 @@ class ContainerDiary(private val player: EntityPlayer, private val tileEntityDia
         tileEntityDiary.updateBalance()
         player.experienceValues = xp
     }
-
-
 }
