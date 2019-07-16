@@ -96,12 +96,10 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
 
     private fun updateUi()
     {
-        val tax = 1.0f - tileEntityDiary.storageTax
-
-        plus1.enabled = player.experienceTotal >= 1 && tileEntityDiary.balance + (1.0f*tax) <= tileEntityDiary.storageCap + 1
-        plus10.enabled = player.experienceTotal >= 10 && tileEntityDiary.balance + (10.0f*tax) <= tileEntityDiary.storageCap + 1
-        plus100.enabled = player.experienceTotal >= 100 && tileEntityDiary.balance + (100.0f*tax) <= tileEntityDiary.storageCap + 1
-        plus1000.enabled = player.experienceTotal >= 1000 && tileEntityDiary.balance + (1000.0f*tax) <= tileEntityDiary.storageCap + 1
+        plus1.enabled = player.experienceTotal >= 1 && tileEntityDiary.balance.toInt() + 1 <= tileEntityDiary.storageCap
+        plus10.enabled = player.experienceTotal >= 10 && tileEntityDiary.balance.toInt() + 10 <= tileEntityDiary.storageCap
+        plus100.enabled = player.experienceTotal >= 100 && tileEntityDiary.balance.toInt() + 100 <= tileEntityDiary.storageCap
+        plus1000.enabled = player.experienceTotal >= 1000 && tileEntityDiary.balance.toInt() + 1000 <= tileEntityDiary.storageCap
 
         minus1.enabled = tileEntityDiary.balance >= 1
         minus10.enabled = tileEntityDiary.balance >= 10
