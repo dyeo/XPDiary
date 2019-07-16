@@ -73,7 +73,7 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
 
         fontRenderer.drawString(tileEntityDiary.displayName!!.unformattedText, 5, 5, Color.darkGray.rgb)
 
-        val xp = "%.2f".format(tileEntityDiary.balance) + "XP"
+        val xp = "%.2f".format(tileEntityDiary.balance) + " / " + tileEntityDiary.storageCap.toString() + "XP"
         val tax = "-" + "%.2f".format(tileEntityDiary.storageTax*100.0f) + "%"
         val px = player.experienceTotal.toString() + "XP"
 
@@ -96,10 +96,12 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
 
     private fun updateUi()
     {
-        plus1.enabled = player.experienceTotal >= 1
-        plus10.enabled = player.experienceTotal >= 10
-        plus100.enabled = player.experienceTotal >= 100
-        plus1000.enabled = player.experienceTotal >= 1000
+        val tax = 1.0f - tileEntityDiary.storageTax
+
+        plus1.enabled = player.experienceTotal >= 1 && tileEntityDiary.balance + (1.0f*tax) <= tileEntityDiary.storageCap
+        plus10.enabled = player.experienceTotal >= 10 && tileEntityDiary.balance + (10.0f*tax) <= tileEntityDiary.storageCap
+        plus100.enabled = player.experienceTotal >= 100 && tileEntityDiary.balance + (100.0f*tax) <= tileEntityDiary.storageCap
+        plus1000.enabled = player.experienceTotal >= 1000 && tileEntityDiary.balance + (1000.0f*tax) <= tileEntityDiary.storageCap
 
         minus1.enabled = tileEntityDiary.balance >= 1
         minus10.enabled = tileEntityDiary.balance >= 10

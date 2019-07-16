@@ -4,11 +4,8 @@ import net.dyeo.xpdiary.network.XPBalanceMessageHandler
 import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.dyeo.xpdiary.utility.XPHelper
 import net.dyeo.xpdiary.utility.experienceValues
-import net.minecraft.block.BlockEnchantmentTable
-import net.minecraft.client.renderer.tileentity.TileEntityEnchantmentTableRenderer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
-import net.minecraft.tileentity.TileEntityEnchantmentTable
 
 class ContainerDiary(private val player: EntityPlayer, private val tileEntityDiary: TileEntityDiary) : Container()
 {
@@ -51,9 +48,12 @@ class ContainerDiary(private val player: EntityPlayer, private val tileEntityDia
     private fun adjustExperience(player: EntityPlayer, amount: Int)
     {
         val diaryAmount = if(amount > 0) amount.toFloat() * (1.0f - tileEntityDiary.storageTax) else amount.toFloat()
-        val xp = XPHelper(player.experienceTotal - amount)
-        tileEntityDiary.balance += diaryAmount
+        var playerAmount = if(diaryAmount > tileEntityDiary.storageCap) tileEntityDiary.storageCap.toFloat() - tileEntityDiary.balance else amount.toFloat()
+
+        tileEntityDiary.balance = kotlin.math.min(tileEntityDiary.balance + diaryAmount, tileEntityDiary.storageCap.toFloat())
         tileEntityDiary.updateBalance()
+
+        val xp = XPHelper(player.experienceTotal - playerAmount.toInt())
         player.experienceValues = xp
     }
 }

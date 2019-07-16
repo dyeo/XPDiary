@@ -222,4 +222,7 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
 
     val storageTax: Float
     get() = (1.0f - storagePower) * 0.3f
+
+    val storageCap: Int
+    get() = ((1.0f - storagePower) * 128.0f).toInt() + (storagePower * 2048.0f).toInt()
 }
