@@ -75,7 +75,7 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
         val LABEL_YPOS = 5
         fontRenderer.drawString(tileEntityDiary.displayName!!.unformattedText, LABEL_XPOS, LABEL_YPOS, Color.darkGray.rgb)
         fontRenderer.drawString("${tileEntityDiary.balance}XP", LABEL_XPOS, LABEL_YPOS + 10, Color.darkGray.rgb)
-
+        fontRenderer.drawString("-${tileEntityDiary.storageTax*100}%", LABEL_XPOS, LABEL_YPOS + 20, Color.darkGray.rgb)
     }
 
     override fun actionPerformed(button: GuiButton)
