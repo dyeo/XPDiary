@@ -4,16 +4,16 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage
 
-class XPBalanceMessage(var pos: BlockPos, var balance: Int) : IMessage
+class XPBalanceMessage(var pos: BlockPos, var balance: Float) : IMessage
 {
-    constructor() : this(BlockPos.ORIGIN, 0)
+    constructor() : this(BlockPos.ORIGIN, 0.0f)
     {
     }
 
     override fun fromBytes(buf: ByteBuf)
     {
         pos = BlockPos(buf.readInt(), buf.readInt(), buf.readInt())
-        balance = buf.readInt()
+        balance = buf.readFloat()
     }
 
     override fun toBytes(buf: ByteBuf)
@@ -21,6 +21,6 @@ class XPBalanceMessage(var pos: BlockPos, var balance: Int) : IMessage
         buf.writeInt(pos.x)
         buf.writeInt(pos.y)
         buf.writeInt(pos.z)
-        buf.writeInt(balance)
+        buf.writeFloat(balance)
     }
 }

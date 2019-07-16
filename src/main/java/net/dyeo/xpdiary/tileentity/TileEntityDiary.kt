@@ -15,10 +15,10 @@ import net.minecraftforge.fml.common.network.NetworkRegistry
 
 class TileEntityDiary : TileEntity(), IInventory
 {
-    var balance = 0
+    var balance = 0.0f
         set(value)
         {
-            field = kotlin.math.max(0, value)
+            field = kotlin.math.max(0.0f, value)
         }
 
     var customName: String? = null
@@ -32,7 +32,7 @@ class TileEntityDiary : TileEntity(), IInventory
             this.customName = compound.getString("CustomName")
         }
 
-        balance = compound.getInteger("balance")
+        balance = compound.getFloat("balance")
     }
 
     override fun writeToNBT(compound: NBTTagCompound): NBTTagCompound
@@ -42,7 +42,7 @@ class TileEntityDiary : TileEntity(), IInventory
             compound.setString("CustomName", customName!!)
         }
 
-        compound.setInteger("balance", balance)
+        compound.setFloat("balance", balance)
 
         return super.writeToNBT(compound)
     }
