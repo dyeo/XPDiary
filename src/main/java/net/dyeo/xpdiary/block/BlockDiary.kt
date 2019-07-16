@@ -4,6 +4,8 @@ import net.dyeo.xpdiary.XPDiary
 import net.dyeo.xpdiary.gui.GuiHandler
 import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.minecraft.block.BlockContainer
+import net.minecraft.block.BlockEnchantmentTable
+import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
@@ -17,8 +19,11 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
+import net.minecraft.item.Item.getItemFromBlock
+import net.minecraft.item.ItemStack
+import net.minecraft.util.math.RayTraceResult
 
-class BlockDiary : BlockContainer(Material.ROCK)
+class BlockDiary : BlockContainer(Material.ROCK, MapColor.BLUE)
 {
     companion object
     {
@@ -28,6 +33,8 @@ class BlockDiary : BlockContainer(Material.ROCK)
     init
     {
         setCreativeTab(CreativeTabs.MISC)
+        setResistance(30.0f)
+        setHardness(5.0f)
     }
 
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity? = TileEntityDiary()
@@ -57,6 +64,20 @@ class BlockDiary : BlockContainer(Material.ROCK)
     override fun isFullCube(state: IBlockState?): Boolean = false
 
     override fun getRenderType(iBlockState: IBlockState?): EnumBlockRenderType = EnumBlockRenderType.MODEL
+
+    override fun getPickBlock(state: IBlockState, target: RayTraceResult?, world: World, pos: BlockPos, player: EntityPlayer?): ItemStack
+        = ItemStack(getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)))
+
+    override fun quantityDropped(state: IBlockState, fortune: Int, random: Random): Int = 1
+
+    override fun onBlockHarvested(worldIn: World, pos: BlockPos, state: IBlockState, player: EntityPlayer)
+    {
+        super.onBlockHarvested(worldIn, pos, state, player)
+        (worldIn.getTileEntity(pos) as? TileEntityDiary)
+                .let {
+                    this.dropXpOnBlockBreak(worldIn, pos, it!!.balance.toInt())
+                }
+    }
 
     @SideOnly(Side.CLIENT)
     override fun randomDisplayTick(stateIn: IBlockState, worldIn: World, pos: BlockPos, rand: Random)
