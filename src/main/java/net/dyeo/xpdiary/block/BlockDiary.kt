@@ -2,6 +2,7 @@ package net.dyeo.xpdiary.block
 
 import net.dyeo.xpdiary.XPDiary
 import net.dyeo.xpdiary.gui.GuiHandler
+import net.dyeo.xpdiary.modid
 import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.BlockEnchantmentTable
@@ -23,10 +24,12 @@ import net.minecraft.item.Item.getItemFromBlock
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.RayTraceResult
 
-class BlockDiary : BlockContainer(Material.ROCK, MapColor.BLUE)
+object BlockDiary : BlockContainer(Material.ROCK, MapColor.BLUE)
 {
     init
     {
+        unlocalizedName = "diary"
+        registryName = ResourceLocation(modid,"diary")
         setCreativeTab(CreativeTabs.MISC)
         setResistance(30.0f)
         setHardness(5.0f)
