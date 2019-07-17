@@ -14,10 +14,10 @@ const val name = "XP Diary"
 const val version = "\${version}"
 const val modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter"
 const val dependencies = "required-before:forgelin@[1.6.0,);"
-const val clientProxyClass = "$modgroup.$modid.proxy.ClientProxy"
-const val serverProxyClass = "$modgroup.$modid.proxy.ServerProxy"
+const val clientProxyClass = "net.dyeo.xpdiary.proxy.ClientProxy"
+const val serverProxyClass = "net.dyeo.xpdiary.proxy.ServerProxy"
 
-@Mod(modid = modid, name = name, version=version, modLanguageAdapter=modLanguageAdapter, dependencies=dependencies)
+@Mod(modid=modid, name=name, version=version, modLanguageAdapter=modLanguageAdapter, dependencies=dependencies)
 object XPDiary
 {
     val networkChannel = NetworkRegistry.INSTANCE.newSimpleChannel(modid)!!

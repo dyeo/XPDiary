@@ -21,7 +21,6 @@ class ClientProxy : CommonProxy()
 
     private fun registerClientResources()
     {
-        ModelLoader.setCustomModelResourceLocation(itemBlockDiary, 0, ModelResourceLocation("$modid:${BlockDiary.name}", "inventory"))
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDiary::class.java, diaryRenderer)
     }
 

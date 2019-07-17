@@ -23,7 +23,7 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
         }
     }
 
-    private val texture = ResourceLocation(modid, "textures/gui/${BlockDiary.name}.png")
+    private val texture = ResourceLocation(modid, "textures/gui/diary.png")
     private val container: ContainerDiary = this.inventorySlots as ContainerDiary
 
     private val plus1 = GuiButton(0, 4, 138, 40, 20, "▲1")

@@ -25,11 +25,6 @@ import net.minecraft.util.math.RayTraceResult
 
 class BlockDiary : BlockContainer(Material.ROCK, MapColor.BLUE)
 {
-    companion object
-    {
-        const val name = "diary"
-    }
-
     init
     {
         setCreativeTab(CreativeTabs.MISC)
