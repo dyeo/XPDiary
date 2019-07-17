@@ -76,7 +76,7 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
 
     override fun getSizeInventory(): Int = 0
 
-    override fun getName(): String = if (hasCustomName()) customName!! else "container.${BlockDiary.name}.name"
+    override fun getName(): String = if (hasCustomName()) customName!! else "container.diary.name"
 
     override fun isEmpty(): Boolean = true
 
@@ -94,17 +94,17 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
 
     override fun openInventory(player: EntityPlayer)
     {
-        if(balance > storageCap)
-        {
-            balance = storageCap.toFloat()
-            markDirty()
-            updateBalance()
-        }
+        updateBalance()
+        markDirty()
     }
 
     override fun setField(id: Int, value: Int) {}
 
-    override fun closeInventory(player: EntityPlayer) = markDirty()
+    override fun closeInventory(player: EntityPlayer)
+    {
+        updateBalance()
+        markDirty()
+    }
 
     override fun setInventorySlotContents(index: Int, stack: ItemStack) {}
 
@@ -166,9 +166,7 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
             this.tRot += Math.PI.toFloat() * 2f
         }
 
-        var f2: Float
-
-        f2 = this.tRot - this.bookRotation
+        var f2 = this.tRot - this.bookRotation
         while (f2 >= Math.PI.toFloat())
         {
             f2 -= Math.PI.toFloat() * 2f
@@ -185,13 +183,15 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
         this.pageFlipPrev = this.pageFlip
         var f = (this.flipT - this.pageFlip) * 0.4f
         val f3 = 0.2f
-        f = MathHelper.clamp(f, -0.2f, 0.2f)
+        f = MathHelper.clamp(f, -f3, f3)
         this.flipA += (f - this.flipA) * 0.9f
         this.pageFlip += this.flipA
     }
 
     fun updateBalance()
     {
+        balance = kotlin.math.min(balance, storageCap.toFloat())
+
         XPDiary.networkChannel.sendToAllTracking(XPBalanceMessage(pos, balance),
                 NetworkRegistry.TargetPoint(
                         world.provider.dimension,
