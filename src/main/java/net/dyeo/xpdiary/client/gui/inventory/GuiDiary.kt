@@ -1,4 +1,4 @@
-package net.dyeo.xpdiary.gui
+package net.dyeo.xpdiary.client.gui.inventory
 
 import net.dyeo.xpdiary.container.ContainerDiary
 import net.dyeo.xpdiary.modid

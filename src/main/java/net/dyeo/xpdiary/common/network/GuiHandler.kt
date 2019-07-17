@@ -1,5 +1,6 @@
-package net.dyeo.xpdiary.gui
+package net.dyeo.xpdiary.common.network
 
+import net.dyeo.xpdiary.client.gui.inventory.GuiDiary
 import net.dyeo.xpdiary.container.ContainerDiary
 import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.minecraft.entity.player.EntityPlayer
@@ -9,11 +10,11 @@ import net.minecraftforge.fml.common.network.IGuiHandler
 
 object GuiHandler : IGuiHandler
 {
-    val id = 0
+    const val GUI_ID_DIARY = 0
 
     override fun getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any?
     {
-        if (ID == id)
+        if (ID == GUI_ID_DIARY)
         {
             val xyz = BlockPos(x, y, z)
             val tileEntity = world.getTileEntity(xyz)
@@ -28,7 +29,7 @@ object GuiHandler : IGuiHandler
 
     override fun getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any?
     {
-        if (ID == id)
+        if (ID == GUI_ID_DIARY)
         {
             val xyz = BlockPos(x, y, z)
             val tileEntity = world.getTileEntity(xyz)

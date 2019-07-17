@@ -1,11 +1,10 @@
 package net.dyeo.xpdiary.block
 
 import net.dyeo.xpdiary.XPDiary
-import net.dyeo.xpdiary.gui.GuiHandler
+import net.dyeo.xpdiary.common.network.GuiHandler
 import net.dyeo.xpdiary.modid
 import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.minecraft.block.BlockContainer
-import net.minecraft.block.BlockEnchantmentTable
 import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
@@ -41,12 +40,13 @@ object BlockDiary : BlockContainer(Material.ROCK, MapColor.BLUE)
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean
     {
-        if(!worldIn.isRemote)
+        if(!worldIn.isRemote && !playerIn.isSneaking)
         {
-            playerIn.openGui(XPDiary, GuiHandler.id, worldIn, pos.x, pos.y, pos.z)
             (worldIn.getTileEntity(pos) as? TileEntityDiary).let {
                 it?.updateBalance()
             }
+            
+            playerIn.openGui(XPDiary, GuiHandler.GUI_ID_DIARY, worldIn, pos.x, pos.y, pos.z)
         }
         return true
     }

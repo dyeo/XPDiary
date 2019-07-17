@@ -4,13 +4,12 @@ import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.minecraft.client.model.ModelBook
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
-import net.minecraft.entity.Entity
-import net.minecraft.tileentity.TileEntityEnchantmentTable
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.MathHelper
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 @SideOnly(Side.CLIENT)
 class TileEntityDiaryRenderer : TileEntitySpecialRenderer<TileEntityDiary>()
 {
