@@ -12,12 +12,13 @@ class XPBalanceMessageHandler : IMessageHandler<XPBalanceMessage, IMessage>
 {
     companion object
     {
-        fun registerMessage()
+        @JvmStatic
+        fun registerMessage(side: Side)
                 = XPDiary.networkChannel.registerMessage(
                     XPBalanceMessageHandler::class.java,
                     XPBalanceMessage::class.java,
                     XPDiary.NetworkDiscriminators.XPBalance.ordinal,
-                    Side.CLIENT
+                    side
             )
     }
 

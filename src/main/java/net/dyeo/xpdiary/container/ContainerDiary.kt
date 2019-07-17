@@ -1,6 +1,5 @@
 package net.dyeo.xpdiary.container
 
-import net.dyeo.xpdiary.network.XPBalanceMessageHandler
 import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.dyeo.xpdiary.utility.XPHelper
 import net.dyeo.xpdiary.utility.experienceValues
@@ -9,14 +8,6 @@ import net.minecraft.inventory.Container
 
 class ContainerDiary(private val player: EntityPlayer, private val tileEntityDiary: TileEntityDiary) : Container()
 {
-    companion object
-    {
-        init
-        {
-            XPBalanceMessageHandler.registerMessage()
-        }
-    }
-
     override fun canInteractWith(playerIn: EntityPlayer): Boolean = tileEntityDiary.isUsableByPlayer(playerIn)
 
     override fun onContainerClosed(playerIn: EntityPlayer)

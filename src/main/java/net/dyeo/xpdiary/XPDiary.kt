@@ -1,5 +1,6 @@
 package net.dyeo.xpdiary
 
+import net.dyeo.xpdiary.network.XPBalanceMessageHandler
 import net.dyeo.xpdiary.proxy.CommonProxy
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
@@ -7,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.relauncher.Side
 
 const val modgroup = "net.dyeo"
 const val modid = "xpdiary"
@@ -39,6 +41,8 @@ object XPDiary
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent)
     {
+        XPBalanceMessageHandler.registerMessage(Side.CLIENT)
+        XPBalanceMessageHandler.registerMessage(Side.SERVER)
         proxy!!.init(event)
     }
 

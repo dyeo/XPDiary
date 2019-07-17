@@ -1,9 +1,7 @@
 package net.dyeo.xpdiary.gui
 
-import net.dyeo.xpdiary.block.BlockDiary
 import net.dyeo.xpdiary.container.ContainerDiary
 import net.dyeo.xpdiary.modid
-import net.dyeo.xpdiary.network.XPBalanceMessageHandler
 import net.dyeo.xpdiary.tileentity.TileEntityDiary
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiButton
@@ -15,14 +13,6 @@ import java.awt.Color
 
 class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: TileEntityDiary) : GuiContainer(ContainerDiary(player, tileEntityDiary))
 {
-    companion object
-    {
-        init
-        {
-            XPBalanceMessageHandler.registerMessage()
-        }
-    }
-
     private val texture = ResourceLocation(modid, "textures/gui/diary.png")
     private val container: ContainerDiary = this.inventorySlots as ContainerDiary
 
