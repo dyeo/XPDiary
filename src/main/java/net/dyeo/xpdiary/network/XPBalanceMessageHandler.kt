@@ -10,18 +10,6 @@ import net.minecraftforge.fml.relauncher.Side
 
 class XPBalanceMessageHandler : IMessageHandler<XPBalanceMessage, IMessage>
 {
-    companion object
-    {
-        @JvmStatic
-        fun registerMessage(side: Side)
-                = XPDiary.networkChannel.registerMessage(
-                    XPBalanceMessageHandler::class.java,
-                    XPBalanceMessage::class.java,
-                    XPDiary.NetworkDiscriminators.XPBalance.ordinal,
-                    side
-            )
-    }
-
     override fun onMessage(message: XPBalanceMessage?, ctx: MessageContext?): IMessage?
     {
         val minecraft = Minecraft.getMinecraft()

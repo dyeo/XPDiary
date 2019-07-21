@@ -190,17 +190,20 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
 
     fun updateBalance()
     {
-        balance = kotlin.math.min(balance, storageCap.toFloat())
+        if(world != null && !world.isRemote)
+        {
+            balance = kotlin.math.min(balance, storageCap.toFloat())
 
-        XPDiary.networkChannel.sendToAllTracking(XPBalanceMessage(pos, balance),
-                NetworkRegistry.TargetPoint(
-                        world.provider.dimension,
-                        pos.x.toDouble(),
-                        pos.x.toDouble(),
-                        pos.x.toDouble(),
-                        0.0
-                )
-        )
+            XPDiary.networkChannel.sendToAllTracking(XPBalanceMessage(pos, balance),
+                    NetworkRegistry.TargetPoint(
+                            world.provider.dimension,
+                            pos.x.toDouble(),
+                            pos.x.toDouble(),
+                            pos.x.toDouble(),
+                            0.0
+                    )
+            )
+        }
     }
 
     val storagePower: Float

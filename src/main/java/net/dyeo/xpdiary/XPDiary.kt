@@ -1,6 +1,7 @@
 package net.dyeo.xpdiary
 
 import net.dyeo.xpdiary.common.network.GuiHandler
+import net.dyeo.xpdiary.network.XPBalanceMessage
 import net.dyeo.xpdiary.network.XPBalanceMessageHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
@@ -16,8 +17,6 @@ const val name = "XP Diary"
 const val version = "\${version}"
 const val modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter"
 const val dependencies = "required-before:forgelin@[1.6.0,);"
-const val clientProxyClass = "net.dyeo.xpdiary.proxy.ClientProxy"
-const val serverProxyClass = "net.dyeo.xpdiary.proxy.ServerProxy"
 
 @Mod(modid=modid, name=name, version=version, modLanguageAdapter=modLanguageAdapter, dependencies=dependencies)
 object XPDiary
@@ -39,8 +38,12 @@ object XPDiary
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent)
     {
-        XPBalanceMessageHandler.registerMessage(Side.CLIENT)
-        XPBalanceMessageHandler.registerMessage(Side.SERVER)
+        networkChannel.registerMessage(
+            XPBalanceMessageHandler::class.java,
+            XPBalanceMessage::class.java,
+            NetworkDiscriminators.XPBalance.ordinal,
+            Side.CLIENT
+        )
         NetworkRegistry.INSTANCE.registerGuiHandler(XPDiary, GuiHandler)
     }
 
