@@ -86,10 +86,8 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
 
     override fun isUsableByPlayer(player: EntityPlayer): Boolean
     {
-        if (this.world.getTileEntity(this.pos) !== this) return false
-        val CENTRE_OFFSET = 0.5
-        val MAXIMUM_DISTANCE_SQ = 8.0 * 8.0
-        return player.getDistanceSq(pos.x + CENTRE_OFFSET, pos.y + CENTRE_OFFSET, pos.z + CENTRE_OFFSET) < MAXIMUM_DISTANCE_SQ
+        return this.world.getTileEntity(this.pos) == this &&
+                player.getDistanceSq(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5) < 64.0
     }
 
     override fun openInventory(player: EntityPlayer)
@@ -194,15 +192,7 @@ class TileEntityDiary : TileEntity(), ITickable, IInventory
         {
             balance = kotlin.math.min(balance, storageCap.toFloat())
 
-            XPDiary.networkChannel.sendToAllTracking(XPBalanceMessage(pos, balance),
-                    NetworkRegistry.TargetPoint(
-                            world.provider.dimension,
-                            pos.x.toDouble(),
-                            pos.x.toDouble(),
-                            pos.x.toDouble(),
-                            0.0
-                    )
-            )
+            XPDiary.networkChannel.sendToAll(XPBalanceMessage(pos, balance))
         }
     }
 
