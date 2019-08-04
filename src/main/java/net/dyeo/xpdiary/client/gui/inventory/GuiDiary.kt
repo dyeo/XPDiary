@@ -120,4 +120,10 @@ class GuiDiary(private val player: EntityPlayer, private val tileEntityDiary: Ti
             xpos += ofs + button.width
         }
     }
+
+    override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float)
+    {
+        this.drawDefaultBackground()
+        super.drawScreen(mouseX, mouseY, partialTicks)
+    }
 }
