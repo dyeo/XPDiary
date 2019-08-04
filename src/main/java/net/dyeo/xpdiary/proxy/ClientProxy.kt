@@ -20,7 +20,7 @@ class ClientProxy : CommonProxy()
         super.init(event)
 
         XPDiary.networkChannel.registerMessage(
-                XPBalanceMessageHandler::class.java,
+                XPBalanceMessageHandler.Client::class.java,
                 XPBalanceMessage::class.java,
                 XPDiary.NetworkDiscriminators.XPBalance.ordinal,
                 Side.CLIENT

@@ -1,8 +1,8 @@
 package net.dyeo.xpdiary.proxy
 
 import net.dyeo.xpdiary.XPDiary
-import net.dyeo.xpdiary.network.EmptyMessage
-import net.dyeo.xpdiary.network.EmptyMessageHandler
+import net.dyeo.xpdiary.network.XPBalanceMessage
+import net.dyeo.xpdiary.network.XPBalanceMessageHandler
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
@@ -20,8 +20,8 @@ class ServerProxy : CommonProxy()
         super.init(event)
 
         XPDiary.networkChannel.registerMessage(
-                EmptyMessageHandler::class.java,
-                EmptyMessage::class.java,
+                XPBalanceMessageHandler.Server::class.java,
+                XPBalanceMessage::class.java,
                 XPDiary.NetworkDiscriminators.XPBalance.ordinal,
                 Side.CLIENT
         )
